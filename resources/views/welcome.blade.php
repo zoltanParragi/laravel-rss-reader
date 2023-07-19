@@ -11,7 +11,8 @@
     @include('includes.navbar')
 
     <div class="container p-5">
-        <h1 class="text-center">Laravel RSS Reader</h1>
+        <h1 class="text-center">RSS Reader</h1>
+        <h2 class="text-center">in Laravel</h2>
     </div>
 
     <script src="/js/app.js"></script>

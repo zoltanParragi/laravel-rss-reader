@@ -28,7 +28,12 @@
                         <li>Last updated: {{ $channel['updated_at'] }}</li>
                     </ul>
                     <div class="ps-3 pe-3 pb-3">
-                        <button class="btn btn-primary">Read the News</button>
+                        <a 
+                            class="btn btn-primary"
+                            href={{route('readnews', [ 'id' => $channel['id']])}}
+                        >
+                            Read the News
+                        </a>
                         <a 
                             class="btn btn-success"
                             href={{ route('savenews', [ 'id' => $channel['id']]) }}

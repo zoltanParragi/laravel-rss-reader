@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Channel;
+use App\Models\Newsitem;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\OnlyGuests;
@@ -62,6 +63,8 @@ Route::group(['middleware'=>[OnlyUsers::class]], function() {
         return view('profile');
     })->name('profile');
 
+    // rss feed source: https://news.un.org/en/rss-feeds
+
     Route::get('/add-rss-channel', function() {
         return view('add-rss-channel');
     })->name('add-rss-channel');
@@ -72,48 +75,46 @@ Route::group(['middleware'=>[OnlyUsers::class]], function() {
             'url'=>'required|active_url|unique:channels',
         ]);
 
-        $validated['user-id'] = Auth::user()->id;
+        $validated['user_id'] = Auth::user()->id;
         Channel::create($validated);
 
         return redirect()->back()->with('successmsg', 'Channel saved :)');
     })->name('add-rss-channel');
    
     Route::get('/my-channels', function(Request $request) {
-        $channels = Channel::where('user-id', '=', Auth::user()->id)->get();
+        $channels = Channel::where('user_id', '=', Auth::user()->id)->get();
         $request->session()->flash('channels', $channels);
         return view('my-channels');
     })->name('my-channels');
 
+    Route::get('/readnews/{id}', function($id) {
+        return view('readnews', [
+            'newsitems' => Newsitem::where('channel_id', '=', $id)->paginate(10),
+            'channel_name' => Channel::find($id)->channel_name,
+            //'channel_name' => Channel::where('id', "=", $id)->first()->channel_name,
+            ] 
+        );
+    })->name('readnews');
+
+
     Route::get('/savenews/{id}', function($id) {
         $channel = Channel::find($id);
-        //dd($channel->url);
-        $content = file_get_contents('https://www.hirstart.hu/site/publicrss.php?pos=balrovat&pid=51');
-        //$content = file_get_contents($channel->url);
+        $content = file_get_contents($channel->url);
         $contetn_array = new \SimpleXMLElement($content);
-        //$x = json_encode($contetn_array);
 
-        /* if($channel) {
-            $channel->news = json_encode($contetn_array->channel->item[0]);
-            //$channel->news = $contetn_array->channel->item[0] -> title;
-            $channel->save();
-        } */
-        /* foreach ($contetn_array->channel->item as $entry) {
-            $channel->updateorcreate([
-                'url' => $entry->link
-            ], [
-                "user-id" => Auth::user()->id,
-                "channel_name" => $channel -> channel_name,
-                "title" => $entry->title,
-                "description" => $entry->description,
-                "author" => $entry->author,
-                "pub_date" => $entry->pubDate,
-                "image" => $entry->enclosure
-            ]);
-
-            //$channel->update(['last_refresh'=>time()]);
-        } */
-        
-        dd($contetn_array);
+        foreach ($contetn_array->channel->item as $entry) {
+            Newsitem::updateOrCreate(
+                ['link' => '$entry->link'],
+                [
+                    'channel_id' => $channel->id,
+                    "title" => $entry->title,
+                    "link" => $entry->link,
+                    "description" => $entry->description,
+                    "img_url" => $entry->enclosure->attributes()->url,
+                    "pub_date" => $entry->pubDate,
+                ]
+            );
+        }
 
         return redirect()->back()->with('successmsg', 'News saved/updated :)');
 
