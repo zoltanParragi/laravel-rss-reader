@@ -36,7 +36,7 @@
             
             @auth
             <ul class="d-flex navbar-nav">
-                <li class="nav-item text-white">Üdvözlünk {{ auth()->user()->name }}!</li>
+                <li class="nav-item text-white">Welcome {{ auth()->user()->name }}!</li>
             </ul>
             @endauth
         </div>
