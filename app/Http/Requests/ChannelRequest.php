@@ -24,7 +24,8 @@ class ChannelRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'channel_name'=> 'required|min:3|max:20',
+            'url'=>'required|active_url',
         ];
     }
 }

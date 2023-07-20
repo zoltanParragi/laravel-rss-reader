@@ -24,8 +24,8 @@
                         <h5>{{ $channel['channel_name'] }}</h5>
                     </div>
                     <ul class="list-unstyled ps-3 pe-3 pt-3">
-                        <li>Url: {{ $channel['url'] }}</li>
-                        <li>Last updated: {{ $channel['updated_at'] }}</li>
+                        <li><b>Url:</b> {{ $channel['url'] }}</li>
+                        <li><b>Last updated:</b> {{ $channel['updated_at'] }}</li>
                     </ul>
                     <div class="ps-3 pe-3 pb-3">
                         <a 

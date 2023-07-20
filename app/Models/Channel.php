@@ -19,9 +19,5 @@ class Channel extends Model
         'channel_name',
         'url',
         'news',
-    ];
-
-    /* protected $casts = [
-        'news' => 'string' // 'array'
-        ]; */
+    ];   
 }
