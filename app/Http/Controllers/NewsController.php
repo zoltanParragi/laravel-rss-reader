@@ -15,15 +15,15 @@ class NewsController extends Controller
             ] 
         );
     }
+
     function save_news($id) {
         $channel = Channel::find($id);
         $content = file_get_contents($channel->url);
         $contetn_array = new \SimpleXMLElement($content);
 
         foreach ($contetn_array->channel->item as $entry) {
-            //dd(Newsitem::find(1)->link, $entry->link[0]);
             Newsitem::updateOrCreate(
-                ['link' => '$entry->link'],
+                ['link' => $entry->link],
                 [
                     'channel_id' => $channel->id,
                     "title" => $entry->title,

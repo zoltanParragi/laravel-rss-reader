@@ -12,7 +12,7 @@
     
     <div class="container pt-5 pb-5">
         
-        <div class="row col-12 mx-auto">
+        <div class="row col-10 mx-auto">
             <h5 class="text-center">Channel name:</h5>
             <h1 class="text-center mt-0">{{$channel_name}}</h1>
             
@@ -21,7 +21,7 @@
             </div>
         </div>
         
-        <div class="row col-12 justify-content-between">
+        <div class="row col-10 mx-auto justify-content-between">
             @if (count($newsitems) > 0)
 
                 @foreach ( $newsitems as $newsitem )
@@ -30,7 +30,7 @@
                             <h5>{{ $newsitem['title'] }}</h5>
                         </div>
                         <div class="p-4 card-body">
-                            <img class="me-3 img-thumbnail float-start" src={{$newsitem['img_url']}} width=250 alt={{ $newsitem['title'] }}>
+                            <img class="card-img-top mb-3 rounded-bottom" src={{$newsitem['img_url']}} width=250 alt={{ $newsitem['title'] }}>
                             <p>{{$newsitem['description']}}</p>
                             <p><i>Publication date: {{$newsitem['pub_date']}}</i></p>
                             <a href={{$newsitem['link']}} target="_blank">Read more</a>

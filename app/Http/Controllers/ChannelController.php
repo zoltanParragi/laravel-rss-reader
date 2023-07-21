@@ -17,12 +17,6 @@ class ChannelController extends Controller
         return redirect()->back()->with('successmsg', 'Channel saved :)');
     }
 
-    function my_channels(Request $request) {
-        $channels = Channel::where('user_id', '=', Auth::user()->id)->get();
-        $request->session()->flash('channels', $channels);
-        return view('my-channels');
-    }
-
     function deletechannel($id) {
         Channel::find($id)->delete();
         return redirect()->back()->with('successmsg', 'Channel deleted :)');

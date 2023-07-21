@@ -8,6 +8,7 @@ use App\Http\Middleware\OnlyGuests;
 use App\Http\Middleware\OnlyUsers;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,7 +71,7 @@ Route::group(['middleware'=>[OnlyUsers::class]], function() {
 
     Route::post('/add-rss-channel', [ChannelController::class, 'add_channel'])->name('add-rss-channel');
     
-    Route::get('/my-channels', [ChannelController::class, 'my_channels'])->name('my-channels');
+    Route::get('/my-channels', [UserController::class, 'user_channels'])->name('my-channels');
     
     Route::get('/deletechannel/{id}', [ChannelController::class, 'deletechannel'])->name('deletechannel');
 

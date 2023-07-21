@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Channel;
 
 class User extends Authenticatable
 {
@@ -36,5 +37,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function getChannels() {
+        return $this->hasMany(Channel::class);
+    }
 
 }
