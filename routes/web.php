@@ -75,7 +75,7 @@ Route::group(['middleware'=>[OnlyUsers::class]], function() {
     
     Route::get('/deletechannel/{id}', [ChannelController::class, 'deletechannel'])->name('deletechannel');
 
-    Route::get('/readnews/{id}', [NewsController::class, 'read_news'])->name('readnews');
+    Route::get('/readnews/{id}', [ChannelController::class, 'read_news'])->name('readnews');
     
     Route::get('/savenews/{id}', [NewsController::class, 'save_news'])->name('savenews');
 

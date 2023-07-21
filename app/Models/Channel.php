@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Newsitem;
 
 class Channel extends Model
 {
@@ -19,5 +20,9 @@ class Channel extends Model
         'channel_name',
         'url',
         'news',
-    ];   
+    ];
+    
+    public function get_news() {
+        return $this->hasMany(Newsitem::class);
+    }
 }

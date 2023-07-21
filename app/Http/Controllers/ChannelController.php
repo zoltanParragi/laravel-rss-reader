@@ -21,4 +21,12 @@ class ChannelController extends Controller
         Channel::find($id)->delete();
         return redirect()->back()->with('successmsg', 'Channel deleted :)');
     }
+
+    function read_news($id) {
+        return view('readnews', [
+            'newsitems' => Channel::find($id)->get_news()->paginate(10),
+            'channel_name' => Channel::find($id)->channel_name,
+            ] 
+        );
+    }
 }

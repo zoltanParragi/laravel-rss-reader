@@ -8,14 +8,6 @@ use App\Models\Newsitem;
 
 class NewsController extends Controller
 {
-    function read_news($id) {
-        return view('readnews', [
-            'newsitems' => Newsitem::where('channel_id', '=', $id)->paginate(10),
-            'channel_name' => Channel::find($id)->channel_name,
-            ] 
-        );
-    }
-
     function save_news($id) {
         $channel = Channel::find($id);
         $content = file_get_contents($channel->url);
