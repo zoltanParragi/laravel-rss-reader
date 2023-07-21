@@ -25,3 +25,6 @@ Egy adott csatorna hírei menthetők.
 - Az adatok tárolására MySQL adatbázist használ az alkalmazás.
 - Az RSS feedek feldolgozására a SimpleXMLElement metódussal történik.
 
+## Extra
+A News oldalon megjelenő hírtartalamk lapozhatók.
+
